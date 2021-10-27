@@ -8,15 +8,14 @@ import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.ensemble import RandomForestClassifier
 
-
 #Function to plot ROC curves of every model
 def all_roc_curves(X, y, dummy, logreg, dtree, rforest, lr_keep_list, dt_keep_list, rf_keep_list):
 
     #Get the FPRs and TPRs of each model
-    dc_test_fpr, dc_test_tpr, dc_test_thresholds = roc_curve(y, dummy.predict(X))
-    lr_test_fpr, lr_test_tpr, lr_test_thresholds = roc_curve(y, logreg.predict(X[lr_keep_list[0]]))
-    dt_test_fpr, dt_test_tpr, dt_test_thresholds = roc_curve(y, dtree.predict(X[dt_keep_list[4]]))
-    RF_test_fpr, RF_test_tpr, RF_test_thresholds = roc_curve(y, rforest.predict(X[rf_keep_list[19]]))
+    dc_test_fpr, dc_test_tpr, dc_test_thresholds = roc_curve(y, dummy.predict_proba(X)[:, 1])
+    lr_test_fpr, lr_test_tpr, lr_test_thresholds = roc_curve(y, logreg.predict_proba(X[lr_keep_list[0]])[:, 1])
+    dt_test_fpr, dt_test_tpr, dt_test_thresholds = roc_curve(y, dtree.predict_proba(X[dt_keep_list[4]])[:, 1])
+    RF_test_fpr, RF_test_tpr, RF_test_thresholds = roc_curve(y, rforest.predict_proba(X[rf_keep_list[19]])[:, 1])
 
     plt.figure(figsize=(10, 8))
     lw = 2
