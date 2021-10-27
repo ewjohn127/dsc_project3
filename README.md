@@ -87,7 +87,7 @@ Recommendations:
 
 ## More Information
 
-Fore more information visit the [CDC Website](https://www.cdc.gov/)
+To learn more about the dataset used visit [U.S. Department of Health and Human Services (DHHS). National Center for Health Statistics.](https://www.cdc.gov/nchs/nis/data_files_09_prior.htm). For more information on vaccinations and the seasonal flu visit the [CDC Website](https://www.cdc.gov/flu/index.htm)
 
 <img src="images/cdc_img.png" width="500">
 
