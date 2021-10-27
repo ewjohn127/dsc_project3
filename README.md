@@ -1,6 +1,6 @@
 # Understanding Seasonal Flu Vaccine Likelyhood in the United States
 
-<img src="https://elitelv.com/wp-content/uploads/2020/01/When-The-Flu-Shot-Fails-1024x536.jpg" width="500">\
+<img src="https://elitelv.com/wp-content/uploads/2020/01/When-The-Flu-Shot-Fails-1024x536.jpg" width="500">
 
 ## Business Problem
 In light of their new vaccination initiative, the CDC has conducted surveys on random individuals throughout the country. **The Goal:** Deliver an inferential binary classifier model to stakeholder (CDC) that determines if someone will take the Seasonal Flu vaccine based on responses to a phone survey. Predictions on future surveys can help assess public health risk by determining the percent of the population likely to get vaccinated.
@@ -24,8 +24,8 @@ These columns were dropped from the dataset. Finally, the remaining columns were
 2. One Hot Encoded Categorical Variables
 3. Scaled Input Variables
 
-## Feature Selection
-Recursive Feature Elimination was used for selecting the best features for each model. 
+## Feature Selection and Parameter Tuning
+Recursive Feature Elimination was used for selecting the best features for each model. Gridsearch was used to identify optimal values for model parameters.
 
 ## Results
 The performance metric used for optimization was ROC curve AUC for the following reasons:
@@ -35,21 +35,45 @@ The performance metric used for optimization was ROC curve AUC for the following
 * binary classification problem
 
 ### Logistic Regression
-The initial model chosen was logistic regression. This was due to the target variable being binary and the goal being an inferential model. The initial logistic regression model used one input feature selected by RFE which produced an ROC AUC score of .67. A chi squared test between each input variables showed significant collinearity and therefore a decision tree was chosen as the next model for adding more features to improve the ROC AUC score.
+The initial model chosen was logistic regression. This was due to the target variable being binary and the goal being an inferential model. The initial logistic regression model used one input feature selected by RFE which produced an ROC AUC score of .680 for both cross validation and test data showing no overfitting. Before adding more features, a chi squared test between each input variable was run which showed significant collinearity between the top performing features. Therefore, a decision tree was chosen as the next model for adding more features to improve the ROC AUC score.
 
 ### Decision Tree
-The initial decision tree model consisted of 5 input variables chosen by RFE. The model showed the most important features for someone to get the seasonal flu vaccine:
+The team decided to use a decision tree as a step-up model as it is immune to multicolinearity, easy to visualize and easy to interpret. The initial decision tree model consisted of 5 input variables chosen by RFE. The model showed the most important features for someone to get the seasonal flu vaccine:
 
 1. Scoring a 5/5 for vaccine efficacy opinion
 2. Being 65+ or older
 3. Doctor recommending the vaccine
 
-### Random Forest
+<table class="image">
+<caption align="top" style="text-align: center;"><font size="+1">First Two Splits of Decision Tree Model</font></caption>
+<tr><td><img src="images/tree_2_splits.png" alt="Trulli" style="width:100%"></td></tr>
+</table>
+
+The average cross validation ROC AUC is 0.81 (81%) which is considerably higher than the average cross validation ROC AUC of the one feature logistic regression model (68%). The test ROC AUC is 75.2%. Although the model is slightly overfitting, this model has a higher test ROC AUC than the one feature logistic regression model (68%).
+
+### Random Forest - Final Model
+To further improve on the ROC curve AUC, Random Forest was selected as the final model to help reduce overfitting from just a single decision tree. The average cross validation ROC AUC is 0.838 (83.8%), which is higher than the average cross validation ROC AUC of the Decision Tree (81%). The test ROC AUC is 77.1%. Although the model is slightly overfitting, this model has a higher test ROC AUC than the decision tree model (75.2%).
+
+In addition the random forest model shows improvement over previous models for both precision, recall and accuracy scores:
+
+<img src="images/cm_all.png" width="1000">
 
 ## Conclusion
 
-1. Shorten survey to important opinion features to improve survey turnover
-2. Education on vaccinations
-3. Education for doctors on recommending vaccinations
+The below graph shows the improvement on the performance metric of ROC AUC of each model. The final model (Random Forest) showed an increase of .1 over the logistic regression model and .24 over the baseline model (majority class).
+
+<img src="images/ROC_AUC_all.png" width="1000">
+
+From the initial tree splits of the model the following recommendations can be made to improve the phone survey and increase the likelyhood of someone taking the vaccine.
+
+Recommendations:
+
+1. Shorten survey to important opinion features to improve survey response
+    * Doctor Recommended Vaccine?
+    * Age Group
+    * Opinion on Vaccine Efficacy
+2. Education on vaccination efficacy will help improve peoples willingness to receive a seasonal flu vaccine
+3. Encourage healthcare professionals to recommend the seasonal flu vaccine 
 
 ## Future Work
+
