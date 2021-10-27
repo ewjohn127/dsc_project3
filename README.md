@@ -85,8 +85,33 @@ Recommendations:
 * Look to improve completion rate of survey so the dropped columns listed in data cleaning section can be utilized.
 * Gather more demographic data like location to make more inferential recommendations
 
+## More Information
+
+Fore more information visit the [CDC Website](https://www.cdc.gov/)
+
+<img src="images/cdc_img.png" width="500">
+
+
 ## Citations
 
 [1] https://www.cdc.gov/flu/prevent/flushot.htm
 
 [2] https://www.drivendata.org/competitions/66/flu-shot-learning/page/210/
+
+
+├── code
+│   ├──
+│   ├── 
+│   ├── 
+│   └── 
+├── appendix
+│   ├── chi_square_test.ipynb
+│   ├── log_reg_notebook.ipynb
+│   ├── decision_tree_notebook.ipynb
+│   ├── preprocessing.xlsx | *Preprocessing Outline*
+│   └── preprocessing_notebook.ipynb
+├── images
+├── README.md
+├── FINAL_PRESENTATION.ppx
+├── FINAL_NOTEBOOK.pdf
+└── FINAL_NOTEBOOK.ipynb
