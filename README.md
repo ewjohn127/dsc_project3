@@ -98,7 +98,9 @@ Fore more information visit the [CDC Website](https://www.cdc.gov/)
 
 [2] https://www.drivendata.org/competitions/66/flu-shot-learning/page/210/
 
+## Repository Structure
 
+```
 ├── code
 │   ├──
 │   ├── 
@@ -115,3 +117,4 @@ Fore more information visit the [CDC Website](https://www.cdc.gov/)
 ├── FINAL_PRESENTATION.ppx
 ├── FINAL_NOTEBOOK.pdf
 └── FINAL_NOTEBOOK.ipynb
+```
