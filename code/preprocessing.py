@@ -29,18 +29,6 @@ def df_dropped(df_predictors):
 
 
 
-#Function to find the columns with percentage of nan values greater than 10%
-def show_percent_nan(df_predictors):
-
-    #Percentages of nan values within the dataset 
-    percent_nan = df_predictors.isna().sum() / df_predictors.shape[0] * 100
-
-    #Return the columns with more than ten percent nan
-    return percent_nan.map(round)[percent_nan > 10]
-
-
-
-
 #Function to drop columns with precentage of nan values greater than 10%
 def df_dropped_nan(df_predictors):
 
@@ -55,7 +43,7 @@ def df_dropped_nan(df_predictors):
 
 
 #Function to create a pipeline to impute
-def pipe_impute(X):
+def pipe_impute():
     
     #Columns to bbe imputed with most_frequent strategy
     frequent_columns = ['behavioral_antiviral_meds', 
@@ -96,7 +84,7 @@ def pipe_impute(X):
         ('col_imputer', col_imputer)
         ])
 
-    columns = [frequent_columns + median_columns + non_imputed_cols]
+    columns = frequent_columns + median_columns + non_imputed_cols
     
     return impute_pipe, columns
 
@@ -125,28 +113,38 @@ def pipe_encode(X):
         ], 
         remainder='passthrough')
 
-    #Create a pipeline containing the encoding ColumnTransformer
+    #Create a pipeline containing the encoding ColumnTransformer and the StandardScaler
     encode_scale_pipe = Pipeline(steps=[
         ('col_oe_ohe', col_oe_ohe),
         ('ss', StandardScaler())
         ])
+    
+    #Fit the data into the pipeline
 
+    transformed_array = encode_scale_pipe.fit_transform(X)
+
+    #Retrieve and create column names for newly transformed data
     encoder = col_oe_ohe.named_transformers_['ohe']
     category_labels = encoder.get_feature_names(ohe_cols)
 
-    oe_ohe_labels = [oe_cols + list(category_labels)]
+    #variable for columns to be dropped from original data
+    impute_drop =  oe_cols + ohe_cols
 
-    impute_drop = [oe_cols + ohe_cols]
+    #variable for columns transformed
+    oe_ohe_labels = oe_cols + list(category_labels)
 
-    return encode_scale_pipe, oe_ohe_labels, impute_drop
+    #Final dataframe of newly transformed data
+    
+
+    return encode_scale_pipe, col_oe_ohe, impute_drop, ohe_cols, oe_cols
 
 
 
 #Function to grid search given a grid and a model
-def grid_search(grid, model, X, y):
+def grid_search(grid, model, X, y, cv=5):
 
     #Initializes GridSearch with given grid and given model
-    gs = GridSearchCV(model, grid, cv=3, return_train_score=True)
+    gs = GridSearchCV(model, grid, cv, return_train_score=True)
 
     #Fits X and y to grid search
     gs.fit(X, np.ravel(y))
@@ -184,7 +182,7 @@ def rfe(X, y, n_features=5, model=LogisticRegression()):
         cv_rfe.append(current_cv)
         keep_list.append(current_keep_list)
     
-    print(f'Features selected: {keep_list}')
+    print(f'Features selected: {keep_list[-1]}')
 
     #Returns the final cross_val list and final keep list
     return cv_rfe, keep_list

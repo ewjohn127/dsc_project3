@@ -7,6 +7,7 @@ from sklearn.metrics import confusion_matrix,plot_confusion_matrix, roc_auc_scor
 import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.ensemble import RandomForestClassifier
+import graphviz 
 
 #Function to plot ROC curves of every model
 def all_roc_curves(X, y, dummy, logreg, dtree, rforest, lr_keep_list, dt_keep_list, rf_keep_list):
@@ -46,17 +47,17 @@ def all_roc_curves(X, y, dummy, logreg, dtree, rforest, lr_keep_list, dt_keep_li
 
 #Function to plot decision tree with depth of 2
 def tree(model, keep_list, y):
-
-    fig, axes = plt.subplots(nrows = 1,ncols = 1, figsize = (1.5,1.5), dpi=1000)
-
-    plot_tree(model,
-              max_depth = 2,
-              feature_names = keep_list[4], 
-              class_names=np.unique(y).astype('str'),
-              filled = True)
-
-    return plt.show()
-
+        dot_data = tree.export_graphviz(model, out_file=None,
+                              max_depth = 2,  
+                              feature_names=keep_list[4],  
+                              class_names=np.unique(y).astype('str'),  
+                              filled=True, rounded=True,  
+                              special_characters=True)  
+        graph = graphviz.Source(dot_data)  
+        graph 
+        # graph.format = 'png'
+        # graph.render('dtree_render',view=True)
+    
 
 #Function to plot roc scores as the number of features in the model increase
 def roc_score_plot(n_features, cv_rfe):
@@ -67,3 +68,4 @@ def roc_score_plot(n_features, cv_rfe):
     ax.set_ylabel('Mean Cross Val ROC AUC Score for Random Forest')
     
     return plt.show()
+
