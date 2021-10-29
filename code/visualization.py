@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.ensemble import RandomForestClassifier
 import graphviz 
+from sklearn import tree
 
 #Function to plot ROC curves of every model
 def all_roc_curves(X, y, dummy, logreg, dtree, rforest, lr_keep_list, dt_keep_list, rf_keep_list):
@@ -46,7 +47,7 @@ def all_roc_curves(X, y, dummy, logreg, dtree, rforest, lr_keep_list, dt_keep_li
 
 
 #Function to plot decision tree with depth of 2
-def tree(model, keep_list, y):
+def tree_viz(model, keep_list, y):
         dot_data = tree.export_graphviz(model, out_file=None,
                               max_depth = 2,  
                               feature_names=keep_list[4],  
@@ -54,7 +55,7 @@ def tree(model, keep_list, y):
                               filled=True, rounded=True,  
                               special_characters=True)  
         graph = graphviz.Source(dot_data)  
-        graph 
+        return graph 
         # graph.format = 'png'
         # graph.render('dtree_render',view=True)
     

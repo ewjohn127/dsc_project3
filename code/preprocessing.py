@@ -144,7 +144,7 @@ def pipe_encode(X):
 def grid_search(grid, model, X, y, cv=5):
 
     #Initializes GridSearch with given grid and given model
-    gs = GridSearchCV(model, grid, cv, return_train_score=True)
+    gs = GridSearchCV(model, grid, cv=cv, return_train_score=True)
 
     #Fits X and y to grid search
     gs.fit(X, np.ravel(y))
