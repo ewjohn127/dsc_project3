@@ -102,19 +102,19 @@ To learn more about the dataset used visit [U.S. Department of Health and Human 
 
 ```
 ├── code
-│   ├──
-│   ├── 
-│   ├── 
-│   └── 
+│   ├── __pycache__/
+│   ├── __init__.py
+│   ├── preprocessing.py
+│   └── visualization.py
 ├── appendix
 │   ├── chi_square_test.ipynb
 │   ├── log_reg_notebook.ipynb
 │   ├── decision_tree_notebook.ipynb
-│   ├── preprocessing.xlsx | *Preprocessing Outline*
+│   ├── preprocessing.xlsx (Preprocessing Outline)
 │   └── preprocessing_notebook.ipynb
 ├── images
 ├── README.md
-├── FINAL_PRESENTATION.ppx
-├── FINAL_NOTEBOOK.pdf
-└── FINAL_NOTEBOOK.ipynb
+├── seasonal_vaccine_model_pres.pdf
+├── seasonal_vaccine_model.pdf
+└── seasonal_vaccine_model_fb.ipynb
 ```
